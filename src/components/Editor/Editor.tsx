@@ -4,11 +4,12 @@ import { Settings } from "./Settings/Settings";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../state/state";
+import { Page } from "../../types/quiz";
 
 type Props = {};
 
 export function Editor({}: Props) {
-  const [selectedPage, setSelectedPage] = useState({
+  const [selectedPage, setSelectedPage] = useState<Page>({
     id: 0,
     type: "question",
   });
@@ -17,10 +18,17 @@ export function Editor({}: Props) {
   return (
     <div className="h-[calc(100vh-80px)]">
       <div className="flex flex-row h-full">
-        <MainView quiz={quiz} className="w-3/4 h-full" />
+        <MainView
+          quiz={quiz}
+          activePage={quiz.questions[selectedPage.id]}
+          className="w-3/4 h-full"
+        />
         <Settings className="w-1/4 h-full" />
       </div>
-      <Navigation quiz={quiz} />
+      <Navigation
+        changeView={(page: Page) => setSelectedPage(page)}
+        quiz={quiz}
+      />
     </div>
   );
 }

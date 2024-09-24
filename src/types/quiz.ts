@@ -13,3 +13,8 @@ export type Quiz = {
   id: number;
   questions: Question[];
 };
+
+export type Page = {
+  id: number;
+  type: "question" | "answer";
+};
