@@ -1,9 +1,5 @@
-import { Quiz } from "../../types/quiz";
+type Props = {};
 
-type Props = {
-  quiz: Quiz[];
-};
-
-export function Viewer({ quiz }: Props) {
+export function Viewer({}: Props) {
   return <div>Viewer</div>;
 }

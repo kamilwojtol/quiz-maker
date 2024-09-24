@@ -1,9 +1,9 @@
-type Answer = {
+export type Answer = {
   id: number;
   value: string;
 };
 
-type Question = {
+export type Question = {
   id: number;
   value: string;
   answers: Answer[];
