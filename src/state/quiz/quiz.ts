@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Question, Quiz } from "../../types/quiz";
+import { Answer, Question, Quiz } from "../../types/quiz";
 
 const initialState: Quiz = {
   id: 0,
@@ -58,9 +58,28 @@ const quizSlice = createSlice({
     addQuestion: (state, action: PayloadAction<Question>) => {
       state.questions.push(action.payload);
     },
+    updateQuestion: (state, action: PayloadAction<Question>) => {
+      const question = state.questions.find(
+        (question) => question.id === action.payload.id,
+      );
+      if (question) {
+        question.value = action.payload.value;
+      }
+    },
+    updateAnswer: (state, action: PayloadAction<Answer>) => {
+      const question = state.questions.find((question) =>
+        question.answers.find((answer) => answer.id === action.payload.id),
+      );
+      if (question) {
+        // @ts-ignore
+        question.answers.find(
+          (answer) => answer.id === action.payload.id,
+        ).value = action.payload.value;
+      }
+    },
   },
 });
 
-export const { addQuestion } = quizSlice.actions;
+export const { addQuestion, updateQuestion, updateAnswer } = quizSlice.actions;
 
 export default quizSlice.reducer;
