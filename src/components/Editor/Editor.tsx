@@ -3,7 +3,7 @@ import { Navigation } from "./Navigation/Navigation";
 import { Settings } from "./Settings/Settings";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../state/state";
+import { RootState } from "../../state/state";
 import { Page } from "../../types/quiz";
 
 type Props = {};
@@ -22,6 +22,7 @@ export function Editor({}: Props) {
           quiz={quiz}
           activePage={quiz.questions[selectedPage.id]}
           className="w-3/4 h-full"
+          type={selectedPage.type}
         />
         <Settings className="w-1/4 h-full" />
       </div>

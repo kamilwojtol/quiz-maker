@@ -55,7 +55,7 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
-    addQuestion: (state, action: PayloadAction<Question>) => {
+    addQuestion: (state, action: PayloadAction<any>) => {
       state.questions.push(action.payload);
     },
     updateQuestion: (state, action: PayloadAction<Question>) => {
