@@ -18,7 +18,7 @@ export default function AnswersView({ activePage }: Props) {
   return (
     <div className="mt-4 flex flex-col gap-2 justify-center items-center">
       {activePage.answers.map((answer, index) => (
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center" key={index}>
           <MinusIcon
             className="size-5 cursor-pointer"
             onClick={() => {
@@ -32,7 +32,6 @@ export default function AnswersView({ activePage }: Props) {
           />
           <input
             type="text"
-            key={index}
             value={answer.value}
             className="p-2 mx-2 border-2 rounded-md border-dashed border-gray-400"
             onChange={(e) => {

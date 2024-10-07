@@ -18,12 +18,14 @@ export function Editor({}: Props) {
   return (
     <div className="h-[calc(100vh-80px)]">
       <div className="flex flex-row h-full">
-        <MainView
-          quiz={quiz}
-          activePage={quiz.questions[selectedPage.id]}
-          className="w-3/4 h-full"
-          type={selectedPage.type}
-        />
+        {quiz.questions.length && (
+          <MainView
+            quiz={quiz}
+            activePage={quiz.questions[selectedPage.id]}
+            className="w-3/4 h-full"
+            type={selectedPage.type}
+          />
+        )}
         <Settings className="w-1/4 h-full" />
       </div>
       <Navigation

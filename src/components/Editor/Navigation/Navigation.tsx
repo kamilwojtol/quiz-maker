@@ -1,6 +1,7 @@
 import { Page, Quiz } from "../../../types/quiz";
 import { NavigationElement } from "./NavigationElement/NavigationElement";
 import NavigationElementNew from "./NavigationElement/NavigationElementNew";
+import NavigationPublishButton from "./NavigationPublishButton/NavigationPublishButton";
 
 type Props = {
   quiz: Quiz;
@@ -18,6 +19,7 @@ export function Navigation({ quiz, changeView }: Props) {
         key={quiz.questions.length + 1}
         id={quiz.questions.length + 1}
       />
+      <NavigationPublishButton className="ml-auto" quiz={quiz} />
     </div>
   );
 }
