@@ -77,9 +77,39 @@ const quizSlice = createSlice({
         ).value = action.payload.value;
       }
     },
+    addAnswer: (state, action: PayloadAction<Answer>) => {
+      const question = state.questions.find(
+        (question) => question.id === action.payload.id,
+      );
+      if (question) {
+        question.answers.push({
+          id: question.answers[question.answers.length - 1].id + 1,
+          value: action.payload.value,
+        });
+      }
+    },
+    removeAnswer: (
+      state,
+      action: PayloadAction<{ answerId: number; questionId: number }>,
+    ) => {
+      const question = state.questions.find(
+        (question) => question.id === action.payload.questionId,
+      );
+      if (question) {
+        question.answers = question.answers.filter(
+          (answer) => answer.id !== action.payload.answerId,
+        );
+      }
+    },
   },
 });
 
-export const { addQuestion, updateQuestion, updateAnswer } = quizSlice.actions;
+export const {
+  addQuestion,
+  updateQuestion,
+  updateAnswer,
+  addAnswer,
+  removeAnswer,
+} = quizSlice.actions;
 
 export default quizSlice.reducer;
