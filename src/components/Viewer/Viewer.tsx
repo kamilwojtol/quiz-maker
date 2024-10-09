@@ -1,5 +1,9 @@
-type Props = {};
+import { Quiz } from "../../types/quiz";
 
-export function Viewer({}: Props) {
-  return <div>Viewer</div>;
+type Props = {
+  quiz: Quiz;
+};
+
+export function Viewer({ quiz }: Props) {
+  return <pre>{JSON.stringify(quiz, null, 2)}</pre>;
 }

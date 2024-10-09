@@ -38,6 +38,7 @@ export default function AnswersView({ activePage }: Props) {
               dispatch(
                 updateAnswer({
                   id: answer.id,
+                  pageId: activePage.id,
                   value: e.target.value,
                 }),
               );

@@ -10,6 +10,10 @@ const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    loadQuizFromQuizId: (state, action: PayloadAction<Quiz>) => {
+      state.id = action.payload.id;
+      state.questions = action.payload.questions;
+    },
     addQuestion: (state, action: PayloadAction<any>) => {
       state.questions.push(action.payload);
     },
@@ -21,9 +25,12 @@ const quizSlice = createSlice({
         question.value = action.payload.value;
       }
     },
-    updateAnswer: (state, action: PayloadAction<Answer>) => {
-      const question = state.questions.find((question) =>
-        question.answers.find((answer) => answer.id === action.payload.id),
+    updateAnswer: (
+      state,
+      action: PayloadAction<{ id: number; pageId: number; value: string }>,
+    ) => {
+      const question = state.questions.find(
+        (question) => question.id === action.payload.pageId,
       );
       if (question) {
         // @ts-ignore
@@ -69,6 +76,7 @@ export const {
   updateAnswer,
   addAnswer,
   removeAnswer,
+  loadQuizFromQuizId,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;
