@@ -18,3 +18,8 @@ export type Page = {
   id: number;
   type: "question" | "answer";
 };
+
+export type ViewerAnswer = {
+  questionId: number;
+  answerId: number;
+};
