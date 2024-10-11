@@ -14,7 +14,7 @@ export default function QuestionsView({ activePage }: Props) {
     <>
       <input
         type="text"
-        className="p-2 mt-4 mb-2 border-2 rounded-md border-dashed border-gray-400"
+        className="w-3/4 p-2 mt-4 mb-2 border-2 rounded-md border-dashed border-gray-400"
         value={activePage.value}
         onChange={(e) =>
           dispatch(

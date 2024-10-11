@@ -9,8 +9,14 @@ type Props = {
 export function Viewer({ quiz }: Props) {
   const [answers, setAnswers] = useState<ViewerAnswer[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [score, setScore] = useState<number | null>(null);
 
-  function addAnswerToQuiz(answerId: number, questionId: number) {
+  function addAnswerToQuiz(answerId: number | null, questionId: number) {
+    if (!answerId) {
+      throw new Error("Click a button to select correct answer!");
+    }
+
     answers.find((answer) => answer.questionId === questionId)
       ? addToQuiz(answerId, questionId)
       : setAnswers((prev) => [...prev, { answerId, questionId }]);
@@ -25,6 +31,20 @@ export function Viewer({ quiz }: Props) {
       ...removeDuplicatedAnswers,
       { answerId: answerId, questionId },
     ]);
+  }
+
+  function finishQuiz() {
+    let score = 0;
+
+    quiz.questions.forEach((question) => {
+      answers.forEach((quizAnswer) => {
+        if (quizAnswer.answerId === question.correctAnswerId) {
+          score++;
+        }
+      });
+    });
+
+    setScore(score);
   }
 
   return (
@@ -45,13 +65,10 @@ export function Viewer({ quiz }: Props) {
                   key={index}
                   className="hidden peer"
                   onClick={() => {
-                    addAnswerToQuiz(
-                      answer.id,
-                      quiz.questions[currentQuestion].id,
-                    );
+                    setSelectedAnswer(answer.id);
                   }}
                 />
-                <div className="p-2 m-1 border-2 border-gray-500 rounded-xl flex flex-row cursor-pointer peer-checked:bg-slate-400 peer-checked:text-white">
+                <div className="p-2 m-1 border-2 border-gray-400 rounded-xl flex flex-row cursor-pointer peer-checked:bg-slate-400 peer-checked:text-white">
                   {answer.value}
                 </div>
               </label>
@@ -68,15 +85,38 @@ export function Viewer({ quiz }: Props) {
           Previous question
         </Button>
         <Button
-          disabled={currentQuestion === quiz.questions.length - 1}
+          disabled={!selectedAnswer || currentQuestion < answers.length}
           onClick={() => {
-            setCurrentQuestion((prev) => prev + 1);
+            addAnswerToQuiz(selectedAnswer, quiz.questions[currentQuestion].id);
           }}
         >
-          Next question
+          Confirm
         </Button>
+        {answers.length === quiz.questions.length ? (
+          <Button
+            onClick={() => {
+              finishQuiz();
+            }}
+          >
+            Finish
+          </Button>
+        ) : (
+          <Button
+            disabled={currentQuestion === quiz.questions.length - 1}
+            onClick={() => {
+              setCurrentQuestion((prev) => prev + 1);
+            }}
+          >
+            Next question
+          </Button>
+        )}
       </div>
       <div>{`${currentQuestion + 1} / ${quiz.questions.length}`}</div>
+      {score && (
+        <h2 className="text-4xl">
+          Your score: {score} / {quiz.questions.length}
+        </h2>
+      )}
     </div>
   );
 }

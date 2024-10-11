@@ -6,6 +6,7 @@ export type Answer = {
 export type Question = {
   id: number;
   value: string;
+  correctAnswerId?: number;
   answers: Answer[];
 };
 

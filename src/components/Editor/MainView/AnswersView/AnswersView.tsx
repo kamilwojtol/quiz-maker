@@ -5,8 +5,10 @@ import {
   addAnswer,
   removeAnswer,
   updateAnswer,
+  setCorrectAnswer,
 } from "../../../../state/quiz/quiz";
-import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { MinusIcon, PlusIcon, CheckIcon } from "@heroicons/react/20/solid";
+import Button from "../../../Shared/Button";
 
 type Props = {
   activePage: Question;
@@ -44,6 +46,25 @@ export default function AnswersView({ activePage }: Props) {
               );
             }}
           />
+          <Button
+            className="flex gap-2 justify-center items-center"
+            type={
+              answer.id === activePage.correctAnswerId ? "success" : "primary"
+            }
+            onClick={() => {
+              dispatch(
+                setCorrectAnswer({
+                  questionId: activePage.id,
+                  answerId: answer.id,
+                }),
+              );
+            }}
+          >
+            <CheckIcon className="size-5 cursor-pointer" />
+            {answer.id === activePage.correctAnswerId
+              ? "Selected as correct answer"
+              : "Set as correct answer"}
+          </Button>
         </div>
       ))}
       <PlusIcon

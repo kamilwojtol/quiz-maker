@@ -67,6 +67,17 @@ const quizSlice = createSlice({
         );
       }
     },
+    setCorrectAnswer: (
+      state,
+      action: PayloadAction<{ questionId: number; answerId: number }>,
+    ) => {
+      const question = state.questions.find(
+        (question) => question.id === action.payload.questionId,
+      );
+      if (question) {
+        question.correctAnswerId = action.payload.answerId;
+      }
+    },
   },
 });
 
@@ -77,6 +88,7 @@ export const {
   addAnswer,
   removeAnswer,
   loadQuizFromQuizId,
+  setCorrectAnswer,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;
