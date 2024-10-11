@@ -1,5 +1,6 @@
 import { Quiz, ViewerAnswer } from "../../types/quiz";
 import { useState } from "react";
+import Button from "../Shared/Button";
 
 type Props = {
   quiz: Quiz;
@@ -11,8 +12,19 @@ export function Viewer({ quiz }: Props) {
 
   function addAnswerToQuiz(answerId: number, questionId: number) {
     answers.find((answer) => answer.questionId === questionId)
-      ? setAnswers(() => [{ answerId, questionId }])
+      ? addToQuiz(answerId, questionId)
       : setAnswers((prev) => [...prev, { answerId, questionId }]);
+  }
+
+  function addToQuiz(answerId: number, questionId: number) {
+    const removeDuplicatedAnswers = answers.filter(
+      (answer) => answer.questionId !== questionId,
+    );
+
+    setAnswers(() => [
+      ...removeDuplicatedAnswers,
+      { answerId: answerId, questionId },
+    ]);
   }
 
   return (
@@ -32,7 +44,7 @@ export function Viewer({ quiz }: Props) {
                   value={answer.value}
                   key={index}
                   className="hidden peer"
-                  onClick={(e) => {
+                  onClick={() => {
                     addAnswerToQuiz(
                       answer.id,
                       quiz.questions[currentQuestion].id,
@@ -46,22 +58,25 @@ export function Viewer({ quiz }: Props) {
             );
           })}
       </div>
-      <div className="flex flex-col">
-        <button
+      <div className="flex flex-row gap-4 mt-4">
+        <Button
+          disabled={currentQuestion === 0}
           onClick={() => {
             setCurrentQuestion((prev) => prev - 1);
           }}
         >
           Previous question
-        </button>
-        <button
+        </Button>
+        <Button
+          disabled={currentQuestion === quiz.questions.length - 1}
           onClick={() => {
             setCurrentQuestion((prev) => prev + 1);
           }}
         >
           Next question
-        </button>
+        </Button>
       </div>
+      <div>{`${currentQuestion + 1} / ${quiz.questions.length}`}</div>
     </div>
   );
 }
