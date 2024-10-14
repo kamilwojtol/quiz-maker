@@ -13,7 +13,7 @@ export function Viewer({ quiz }: Props) {
   const [score, setScore] = useState<number | null>(null);
 
   function addAnswerToQuiz(answerId: number | null, questionId: number) {
-    if (!answerId) {
+    if (answerId === null) {
       throw new Error("Click a button to select correct answer!");
     }
 
@@ -36,12 +36,10 @@ export function Viewer({ quiz }: Props) {
   function finishQuiz() {
     let score = 0;
 
-    quiz.questions.forEach((question) => {
-      answers.forEach((quizAnswer) => {
-        if (quizAnswer.answerId === question.correctAnswerId) {
-          score++;
-        }
-      });
+    answers.forEach((quizAnswer, index) => {
+      if (quiz.questions[index].correctAnswerId === quizAnswer.answerId) {
+        score++;
+      }
     });
 
     setScore(score);
@@ -85,7 +83,7 @@ export function Viewer({ quiz }: Props) {
           Previous question
         </Button>
         <Button
-          disabled={!selectedAnswer || currentQuestion < answers.length}
+          disabled={selectedAnswer === null || currentQuestion < answers.length}
           onClick={() => {
             addAnswerToQuiz(selectedAnswer, quiz.questions[currentQuestion].id);
           }}
@@ -112,7 +110,7 @@ export function Viewer({ quiz }: Props) {
         )}
       </div>
       <div>{`${currentQuestion + 1} / ${quiz.questions.length}`}</div>
-      {score && (
+      {score !== null && (
         <h2 className="text-4xl">
           Your score: {score} / {quiz.questions.length}
         </h2>
