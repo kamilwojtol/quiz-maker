@@ -1,12 +1,8 @@
 import { MainView } from "./MainView/MainView";
 import { Navigation } from "./Navigation/Navigation";
 import { Settings } from "./Settings/Settings";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../state/state";
 import { Page, Quiz } from "../../types/quiz";
-import { useParams } from "react-router-dom";
-import { loadQuizFromQuizId } from "../../state/quiz/quiz";
+import { useState } from "react";
 
 type Props = {
   quiz: Quiz;
