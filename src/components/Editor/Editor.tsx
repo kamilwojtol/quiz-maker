@@ -2,17 +2,16 @@ import { MainView } from "./MainView/MainView";
 import { Navigation } from "./Navigation/Navigation";
 import { Settings } from "./Settings/Settings";
 import { Page, Quiz } from "../../types/quiz";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../state/state";
+import { changeActivePage } from "../../state/quiz/quiz";
 
 type Props = {
   quiz: Quiz;
 };
 
 export function Editor({ quiz }: Props) {
-  const [selectedPage, setSelectedPage] = useState<Page>({
-    id: 0,
-    type: "question",
-  });
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="h-[calc(100vh-80px)]">
@@ -21,11 +20,14 @@ export function Editor({ quiz }: Props) {
           <>
             <MainView
               quiz={quiz}
-              activePage={quiz.questions[selectedPage.id]}
+              activePage={quiz.questions[quiz.activePage.id]}
               className="w-3/4 h-full"
-              type={selectedPage.type}
+              type={quiz.activePage.type}
             />
-            <Settings className="w-1/4 h-full" />
+            <Settings
+              activePage={quiz.questions[quiz.activePage.id]}
+              className="w-1/4 h-full"
+            />
           </>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center">
@@ -34,7 +36,7 @@ export function Editor({ quiz }: Props) {
         )}
       </div>
       <Navigation
-        changeView={(page: Page) => setSelectedPage(page)}
+        changeView={(page: Page) => dispatch(changeActivePage(page))}
         quiz={quiz}
       />
     </div>

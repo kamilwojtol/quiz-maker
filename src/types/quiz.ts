@@ -13,6 +13,7 @@ export type Question = {
 export type Quiz = {
   id: number;
   questions: Question[];
+  activePage: Page;
 };
 
 export type Page = {

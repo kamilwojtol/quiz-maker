@@ -7,8 +7,9 @@ import {
   updateAnswer,
   setCorrectAnswer,
 } from "../../../../state/quiz/quiz";
-import { MinusIcon, PlusIcon, CheckIcon } from "@heroicons/react/20/solid";
+import { PlusIcon, CheckIcon, MinusIcon } from "@heroicons/react/20/solid";
 import Button from "../../../Shared/Button";
+import AlphabetIcon from "../../../Shared/AlphabetIcon";
 
 type Props = {
   activePage: Question;
@@ -16,22 +17,13 @@ type Props = {
 
 export default function AnswersView({ activePage }: Props) {
   const dispatch = useDispatch<AppDispatch>();
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
   return (
     <div className="mt-4 flex flex-col gap-2 justify-center items-center">
       {activePage.answers.map((answer, index) => (
         <div className="flex gap-2 items-center" key={index}>
-          <MinusIcon
-            className="size-5 cursor-pointer"
-            onClick={() => {
-              dispatch(
-                removeAnswer({
-                  answerId: answer.id,
-                  questionId: activePage.id,
-                }),
-              );
-            }}
-          />
+          <AlphabetIcon letter={alphabet[index]} />
           <input
             type="text"
             value={answer.value}
@@ -47,7 +39,7 @@ export default function AnswersView({ activePage }: Props) {
             }}
           />
           <Button
-            className="flex gap-2 justify-center items-center"
+            className="flex gap-2 justify-center items-center w-[240px]"
             type={
               answer.id === activePage.correctAnswerId ? "success" : "primary"
             }
@@ -64,6 +56,31 @@ export default function AnswersView({ activePage }: Props) {
             {answer.id === activePage.correctAnswerId
               ? "Selected as correct answer"
               : "Set as correct answer"}
+          </Button>
+          <Button
+            className="flex gap-2 justify-center items-center"
+            type="danger"
+            onClick={() => {
+              dispatch(
+                removeAnswer({
+                  answerId: answer.id,
+                  questionId: activePage.id,
+                }),
+              );
+            }}
+          >
+            <MinusIcon
+              className="size-5"
+              onClick={() => {
+                dispatch(
+                  removeAnswer({
+                    answerId: answer.id,
+                    questionId: activePage.id,
+                  }),
+                );
+              }}
+            />
+            Remove answer
           </Button>
         </div>
       ))}

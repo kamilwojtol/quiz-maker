@@ -1,9 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Answer, Question, Quiz } from "../../types/quiz";
+import { Answer, Page, Question, Quiz } from "../../types/quiz";
 
 const initialState: Quiz = {
   id: 0,
   questions: [],
+  activePage: {
+    id: 0,
+    type: "question",
+  },
 };
 
 const quizSlice = createSlice({
@@ -16,6 +20,8 @@ const quizSlice = createSlice({
     },
     addQuestion: (state, action: PayloadAction<any>) => {
       state.questions.push(action.payload);
+      state.activePage.id = state.questions.length - 1;
+      state.activePage.type = "question";
     },
     updateQuestion: (state, action: PayloadAction<Question>) => {
       const question = state.questions.find(
@@ -67,6 +73,11 @@ const quizSlice = createSlice({
         );
       }
     },
+    removeQuestion: (state, action: PayloadAction<number>) => {
+      state.questions = state.questions.filter(
+        (question) => question.id !== action.payload,
+      );
+    },
     setCorrectAnswer: (
       state,
       action: PayloadAction<{ questionId: number; answerId: number }>,
@@ -77,6 +88,10 @@ const quizSlice = createSlice({
       if (question) {
         question.correctAnswerId = action.payload.answerId;
       }
+    },
+    changeActivePage: (state, action: PayloadAction<Page>) => {
+      state.activePage.id = action.payload.id;
+      state.activePage.type = action.payload.type;
     },
   },
 });
@@ -89,6 +104,8 @@ export const {
   removeAnswer,
   loadQuizFromQuizId,
   setCorrectAnswer,
+  removeQuestion,
+  changeActivePage,
 } = quizSlice.actions;
 
 export default quizSlice.reducer;

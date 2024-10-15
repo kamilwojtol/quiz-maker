@@ -18,7 +18,18 @@ export default function NavigationElementNew({ id }: Props) {
       <PlusIcon
         className="size-5 cursor-pointer"
         onClick={() => {
-          dispatch(addQuestion({ id: id, value: "", answers: [] }));
+          dispatch(
+            addQuestion({
+              id: id,
+              value: "",
+              answers: [
+                {
+                  id: 0,
+                  value: "",
+                },
+              ],
+            }),
+          );
         }}
       />
     </div>
