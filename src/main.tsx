@@ -8,12 +8,12 @@ import App from "./App";
 
 const router = createBrowserRouter([
   {
-    path: "/play/:quizId?",
-    element: <App editMode={false} />,
-  },
-  {
     path: "/:quizId?",
     element: <App editMode={true} />,
+  },
+  {
+    path: "/play/:quizId?",
+    element: <App editMode={false} />,
   },
 ]);
 
