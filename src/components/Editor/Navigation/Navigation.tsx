@@ -4,6 +4,7 @@ import { NavigationElement } from "./NavigationElement/NavigationElement";
 import NavigationElementNew from "./NavigationElement/NavigationElementNew";
 import NavigationPublishButton from "./NavigationPublishButton/NavigationPublishButton";
 import { createPortal } from "react-dom";
+import Modal from "../../Shared/Modal";
 
 type Props = {
   quiz: Quiz;
@@ -12,6 +13,7 @@ type Props = {
 
 export function Navigation({ quiz, changeView }: Props) {
   const [isQuizPublished, setIsQuizPublished] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(true);
 
   return (
     <div className="flex flex-row gap-3 border-2 justify-center items-center px-4 h-20 bottom-0 fixed w-full">
@@ -28,10 +30,20 @@ export function Navigation({ quiz, changeView }: Props) {
         quiz={quiz}
         quizCreated={(value: boolean) => {
           setIsQuizPublished(value);
+          setIsModalVisible(true);
         }}
       />
       {isQuizPublished &&
-        createPortal(<div>Hewklo</div>, document.getElementById("root")!)}
+        createPortal(
+          <Modal
+            changeVisibility={() => setIsModalVisible(!isModalVisible)}
+            isVisible={isModalVisible}
+          >
+            Link to this quiz is copied to your clipboard. Share it with your
+            friends!
+          </Modal>,
+          document.body,
+        )}
     </div>
   );
 }

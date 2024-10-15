@@ -14,7 +14,7 @@ export default function NavigationPublishButton({
 }: Props) {
   function publishQuiz() {
     const baseQuiz = btoa(encodeURIComponent(JSON.stringify(quiz)));
-    navigator.clipboard.writeText(baseQuiz);
+    navigator.clipboard.writeText(window.location.origin + "/" + baseQuiz);
   }
 
   return (
