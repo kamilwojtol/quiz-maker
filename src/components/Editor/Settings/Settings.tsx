@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Page, Question } from "../../../types/quiz";
+import { Question } from "../../../types/quiz";
 import Button from "../../Shared/Button";
 import { AppDispatch } from "../../../state/state";
 import { changeActivePage, removeQuestion } from "../../../state/quiz/quiz";

@@ -17,7 +17,7 @@ export function Navigation({ quiz, changeView }: Props) {
 
   return (
     <div className="flex flex-row gap-3 border-2 justify-center items-center px-4 h-20 bottom-0 fixed w-full">
-      {quiz.questions.map((question, index) => (
+      {quiz.questions.map((_question, index) => (
         <NavigationElement changeView={changeView} key={index} id={index} />
       ))}
       <NavigationElementNew
