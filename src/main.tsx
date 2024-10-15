@@ -6,16 +6,21 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/play/:quizId?",
+      element: <App editMode={false} />,
+    },
+    {
+      path: "/:quizId?",
+      element: <App editMode={true} />,
+    },
+  ],
   {
-    path: "/play/:quizId?",
-    element: <App editMode={false} />,
+    basename: "https://kamilwojtol.github.io/quiz-maker/",
   },
-  {
-    path: "/:quizId?",
-    element: <App editMode={true} />,
-  },
-]);
+);
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
