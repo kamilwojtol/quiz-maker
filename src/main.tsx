@@ -8,11 +8,11 @@ import App from "./App";
 
 const router = createBrowserRouter([
   {
-    path: "/:quizId?",
+    path: "quiz-maker/:quizId?",
     element: <App editMode={true} />,
   },
   {
-    path: "/play/:quizId?",
+    path: "quiz-maker/play/:quizId?",
     element: <App editMode={false} />,
   },
 ]);
