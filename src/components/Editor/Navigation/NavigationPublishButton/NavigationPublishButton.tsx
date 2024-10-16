@@ -1,3 +1,4 @@
+import { generatePath } from "react-router-dom";
 import { Quiz } from "../../../../types/quiz";
 import Button from "../../../Shared/Button";
 
@@ -14,9 +15,9 @@ export default function NavigationPublishButton({
 }: Props) {
   function publishQuiz() {
     const baseQuiz = btoa(encodeURIComponent(JSON.stringify(quiz)));
-    navigator.clipboard.writeText(
-      window.location.origin + "/quiz-maker/play/" + baseQuiz,
-    );
+    const path = generatePath("/#/play/" + baseQuiz);
+
+    navigator.clipboard.writeText(window.location.origin + path);
   }
 
   return (
